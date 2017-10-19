@@ -13,12 +13,13 @@ void init_glfw();
 GLFWwindow* createWindow(int width, int height, std::string title);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void add_points(std::vector<glm::vec3>&, glm::vec3, glm::vec3, float);
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
     init_glfw();
-    GLFWwindow *window = createWindow(600, 600, "OpenGL Project");
+    GLFWwindow *window = createWindow(1280, 720, "OpenGL Project");
     if(!window){
         return -1;
     }
@@ -33,29 +34,32 @@ int main() {
 
     Shader shader("../Shaders/vShader.vs","../Shaders/fShader.fs");
 
-    std::vector<glm::vec3> vertices = {
-            glm::vec3(-0.5f, -0.5f, 0.0f),
-            glm::vec3(0.5f, -0.5f, 0.0f),
-            glm::vec3(0.0f,  0.5f, 0.0f)
-    };
+//    std::vector<glm::vec3> vertices = {
+//            glm::vec3(-0.5f, -0.5f, 0.0f),
+//            glm::vec3(0.5f, -0.5f, 0.0f),
+//            glm::vec3(0.0f,  0.5f, 0.0f)
+//    };
 
+    std::vector<glm::vec3> vertices;
     GLuint VBO, VAO;
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    Square sq(glm::vec3(0,0,0), glm::vec3(0.8,0.8,0));
+//    Square sq(glm::vec3(0,0,0), glm::vec3(0.8,0.8,0));
 //    vertices = sq.get_vertices();
 //    for (int i = 0; i < vertices.size(); ++i) {
 //        std::cout<< (vertices[i].x) <<" "<< vertices[i].y <<std::endl;
 //    }
-    Grid grid(33,33);
+    Grid grid(40,40);
+
+    clock_t start = clock();
 
     while(!glfwWindowShouldClose(window)){
         processInput(window);
@@ -68,7 +72,16 @@ int main() {
 
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 //        sq.draw(VAO, shader);
-        grid.draw(VAO, shader);
+        grid.draw_grid(VAO, shader);
+//        grid.draw_line(VAO, shader,glm::vec2(0,0), glm::vec2(23,10));
+        clock_t now = clock();
+        float time = (float)(now - start)/(float)CLOCKS_PER_SEC;
+        grid.draw_line_with_time(vertices, VAO, shader,glm::vec2(0,0), glm::vec2(39,39),time,5.0f);
+//        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
+//        shader.use();
+//        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
+//        glBindVertexArray(VAO);
+//        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -100,5 +113,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 void processInput(GLFWwindow *window){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
         glfwSetWindowShouldClose(window,true);
+    }
+}
+
+void add_points(std::vector<glm::vec3> &vertices, glm::vec3 point1, glm::vec3 point2, float time){
+    if(time<=5.0){
+        vertices.push_back(point1 + (point2-point1)*(time/5));
     }
 }
