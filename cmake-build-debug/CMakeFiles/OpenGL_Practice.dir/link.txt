@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/OpenGL_Practice.dir/main.cpp.o CMakeFiles/OpenGL_Practice.dir/glad.c.o CMakeFiles/OpenGL_Practice.dir/shader.cpp.o CMakeFiles/OpenGL_Practice.dir/square.cpp.o CMakeFiles/OpenGL_Practice.dir/grid.cpp.o  -o OpenGL_Practice -lGL -lglfw -ldl -lGLEW 

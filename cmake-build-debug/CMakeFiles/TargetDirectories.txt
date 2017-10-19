@@ -1,0 +1,3 @@
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/OpenGL_Practice.dir

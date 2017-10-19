@@ -1,0 +1,4 @@
+/home/abhisheikh/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.4343.16/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug
