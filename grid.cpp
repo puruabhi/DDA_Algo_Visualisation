@@ -40,10 +40,10 @@ std::vector<std::vector<Square> > Grid::get_grid() {
     return grid;
 }
 
-void Grid::draw_grid(int VAO, Shader shader) {
+void Grid::draw_grid(int VAO, Shader &shader) {
     for (int i = 0; i < grid.size(); ++i) {
         for (int j = 0; j < grid[i].size(); ++j) {
-            grid[i][j].color(VAO, shader, glm::vec3(210.0f/255.0f,105.0f/255.0f,30.0f/255.0f));
+            grid[i][j].draw(VAO, shader);
         }
     }
 }
@@ -58,13 +58,16 @@ void Grid::draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2)
     glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
 }
 
-void Grid::draw_line_with_time(std::vector<glm::vec3> &vertices,int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, float time, float end_time) {
+void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VAO, Shader shader, glm::vec2 point1,
+                               glm::vec2 point2, float time, float end_time, int isDrawing) {
     time = time/end_time;
-    glm::vec3 p1 = get_cell_center(grid[point1.x][point1.y]), p2 = get_cell_center(grid[point2.x][point2.y]);
-    if(time<=1)
-        vertices.push_back(p1 + (p2-p1)*time);
-    shader.use();
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+//    glm::vec3 p1 = get_cell_center(grid[point1.x][point1.y]), p2 = get_cell_center(grid[point2.x][point2.y]);
+    int x = point1.x + (point2.x-point1.x)*time;
+    double y1 = ((point2.y-point1.y)/(point2.x-point1.x))*(float)x + ((point1.y*point2.x)-(point1.x*point2.y))/(point2.x-point1.x);
+    int y = round(y1);
+    if(time<=1 && isDrawing)
+        vertices.push_back(std::make_pair(x,y));
+    for (int i = 0; i < vertices.size(); ++i) {
+        grid[vertices[i].first][vertices[i].second].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
+    }
 }

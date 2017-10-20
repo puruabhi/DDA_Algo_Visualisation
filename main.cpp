@@ -14,12 +14,15 @@ GLFWwindow* createWindow(int width, int height, std::string title);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void add_points(std::vector<glm::vec3>&, glm::vec3, glm::vec3, float);
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+int isDrawing = 1;
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
     init_glfw();
-    GLFWwindow *window = createWindow(1280, 720, "OpenGL Project");
+    GLFWwindow *window = createWindow(600,600, "OpenGL Project");
     if(!window){
         return -1;
     }
@@ -31,6 +34,7 @@ int main() {
     }
 
     glfwSetFramebufferSizeCallback(window,framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
 
     Shader shader("../Shaders/vShader.vs","../Shaders/fShader.fs");
 
@@ -61,8 +65,11 @@ int main() {
 
     clock_t start = clock();
 
+    std::vector<std::pair<int,int> > cells;
+
+    float time = 0;
+
     while(!glfwWindowShouldClose(window)){
-        processInput(window);
 
         glClearColor(0.2f,0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -75,8 +82,11 @@ int main() {
         grid.draw_grid(VAO, shader);
 //        grid.draw_line(VAO, shader,glm::vec2(0,0), glm::vec2(23,10));
         clock_t now = clock();
-        float time = (float)(now - start)/(float)CLOCKS_PER_SEC;
-        grid.draw_line_with_time(vertices, VAO, shader,glm::vec2(0,0), glm::vec2(39,39),time,5.0f);
+        float t= (float)(now - start)/(float)CLOCKS_PER_SEC;
+        start = now;
+        if(isDrawing)
+            time += t;
+        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(19,7),time,5.0f, isDrawing);
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
@@ -114,10 +124,37 @@ void processInput(GLFWwindow *window){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
         glfwSetWindowShouldClose(window,true);
     }
+
+    if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        std::cout<<"Hi"<<std::endl;
+        if(isDrawing == 0){
+            isDrawing = 1;
+        }
+        else{
+            isDrawing = 0;
+        }
+
+    }
 }
 
 void add_points(std::vector<glm::vec3> &vertices, glm::vec3 point1, glm::vec3 point2, float time){
     if(time<=5.0){
         vertices.push_back(point1 + (point2-point1)*(time/5));
+    }
+}
+
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods){
+    switch(key){
+        case GLFW_KEY_ESCAPE:
+            if(action == GLFW_PRESS){
+                glfwSetWindowShouldClose(window,true);
+            }
+            break;
+
+        case GLFW_KEY_SPACE:
+            if(action == GLFW_PRESS){
+                isDrawing = isDrawing^1;
+            }
+            break;
     }
 }

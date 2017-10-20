@@ -19,9 +19,10 @@ public:
     Grid():Grid(default_cols,default_rows){};
     Grid(int cols, int rows);
     std::vector<std::vector<Square> > get_grid();
-    void draw_grid(int VAO, Shader shader);
+    void draw_grid(int VAO, Shader &shader);
     void draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2);
-    void draw_line_with_time(std::vector<glm::vec3> &vertices, int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, float time, float end_time);
+    void draw_line_with_time(std::vector<std::pair<int, int> > &vertices, int VAO, Shader shader,
+                             glm::vec2 point1, glm::vec2 point2, float time, float end_time, int isDrawing);
 };
 
 #endif //OPENGL_PRACTICE_GRID_H
