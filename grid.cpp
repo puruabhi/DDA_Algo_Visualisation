@@ -68,6 +68,6 @@ void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VA
     if(time<=1 && isDrawing)
         vertices.push_back(std::make_pair(x,y));
     for (int i = 0; i < vertices.size(); ++i) {
-        grid[vertices[i].first][vertices[i].second].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
+        grid[vertices[i].first+1][vertices[i].second+1].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
     }
 }

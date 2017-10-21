@@ -61,7 +61,7 @@ int main() {
 //    for (int i = 0; i < vertices.size(); ++i) {
 //        std::cout<< (vertices[i].x) <<" "<< vertices[i].y <<std::endl;
 //    }
-    Grid grid(40,40);
+    Grid grid(50,50);
 
     clock_t start = clock();
 
@@ -86,7 +86,7 @@ int main() {
         start = now;
         if(isDrawing)
             time += t;
-        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(19,7),time,5.0f, isDrawing);
+        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(43, 19),time,5.0f, isDrawing);
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
