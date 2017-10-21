@@ -22,7 +22,7 @@ public:
     void draw_grid(int VAO, Shader &shader);
     void draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2);
     void draw_line_with_time(std::vector<std::pair<int, int> > &vertices, int VAO, Shader shader,
-                             glm::vec2 point1, glm::vec2 point2, float time, float end_time, int isDrawing);
+                             glm::vec2 point1, glm::vec2 point2, float &curr_time, float end_time, int isDrawing, int &step);
 };
 
 #endif //OPENGL_PRACTICE_GRID_H

@@ -59,14 +59,62 @@ void Grid::draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2)
 }
 
 void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VAO, Shader shader, glm::vec2 point1,
-                               glm::vec2 point2, float time, float end_time, int isDrawing) {
-    time = time/end_time;
-//    glm::vec3 p1 = get_cell_center(grid[point1.x][point1.y]), p2 = get_cell_center(grid[point2.x][point2.y]);
-    int x = point1.x + (point2.x-point1.x)*time;
-    double y1 = ((point2.y-point1.y)/(point2.x-point1.x))*(float)x + ((point1.y*point2.x)-(point1.x*point2.y))/(point2.x-point1.x);
-    int y = round(y1);
-    if(time<=1 && isDrawing)
-        vertices.push_back(std::make_pair(x,y));
+                               glm::vec2 point2, float &curr_time, float end_time, int isDrawing, int &step) {
+    if(isDrawing){
+        std::cout<<"Drawing: "<<curr_time<<std::endl;
+        float time = curr_time/end_time;
+        int x = point1.x + (point2.x-point1.x)*time;
+        float y1 = ((point2.y - point1.y) / (point2.x - point1.x)) * (float) x +
+                    ((point1.y * point2.x) - (point1.x * point2.y)) / (point2.x - point1.x);
+        int y = round(y1);
+        if(vertices.size()!=0) {
+            if (time <= 1 && x != vertices[vertices.size()-1].first)
+                vertices.push_back(std::make_pair(x, y));
+        }
+        else{
+            vertices.push_back(std::make_pair(x,y));
+        }
+    }
+    else{
+        if(step<0 && vertices.size()!=0){
+            std::cout<<"Stepping: "<<curr_time<<std::endl;
+            int x = vertices[vertices.size()-1].first;
+            while(vertices.size()>0 && x == vertices[vertices.size()-1].first){
+                vertices.pop_back();
+            }
+            step = 0;
+            if(vertices.size() != 0){
+                x = vertices[vertices.size()-1].first;
+                float time = ((float)x - point1.x)/(point2.x - point1.x);
+                curr_time = time*end_time;
+            }
+            else{
+                curr_time = 0;
+            }
+        }
+        else if(step>0){
+            std::cout<<"Stepping: "<<curr_time<<std::endl;
+            int x,y;
+            if(vertices.size()>0){
+                if(vertices[vertices.size()-1].first != point2.x){
+                    x = vertices[vertices.size()-1].first+1;
+                    float y1 = ((point2.y - point1.y) / (point2.x - point1.x)) * (float) x +
+                                ((point1.y * point2.x) - (point1.x * point2.y)) / (point2.x - point1.x);
+                    int y = round(y1);
+                    vertices.push_back(std::make_pair(x,y));
+                    float time = ((float)x - point1.x)/(point2.x - point1.x);
+                    curr_time = time*end_time;
+                }
+            }
+            else{
+                x = point1.x;
+                y = point1.y;
+                vertices.push_back(std::make_pair(x,y));
+                curr_time = 0;
+            }
+            step = 0;
+        }
+    }
     for (int i = 0; i < vertices.size(); ++i) {
         grid[vertices[i].first+1][vertices[i].second+1].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
     }

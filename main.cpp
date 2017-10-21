@@ -17,6 +17,7 @@ void add_points(std::vector<glm::vec3>&, glm::vec3, glm::vec3, float);
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 int isDrawing = 1;
+int step = 0;
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -61,7 +62,7 @@ int main() {
 //    for (int i = 0; i < vertices.size(); ++i) {
 //        std::cout<< (vertices[i].x) <<" "<< vertices[i].y <<std::endl;
 //    }
-    Grid grid(50,50);
+    Grid grid(50, 50);
 
     clock_t start = clock();
 
@@ -79,14 +80,14 @@ int main() {
 
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 //        sq.draw(VAO, shader);
-        grid.draw_grid(VAO, shader);
+//        grid.draw_grid(VAO, shader);
 //        grid.draw_line(VAO, shader,glm::vec2(0,0), glm::vec2(23,10));
         clock_t now = clock();
         float t= (float)(now - start)/(float)CLOCKS_PER_SEC;
         start = now;
         if(isDrawing)
             time += t;
-        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(43, 19),time,5.0f, isDrawing);
+        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(45, 13),time,7.0f, isDrawing, step);
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
@@ -153,7 +154,22 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
         case GLFW_KEY_SPACE:
             if(action == GLFW_PRESS){
+                step = 0;
                 isDrawing = isDrawing^1;
+            }
+            break;
+
+        case GLFW_KEY_RIGHT:
+            if(action == GLFW_PRESS){
+                isDrawing = 0;
+                step = 1;
+            }
+            break;
+
+        case GLFW_KEY_LEFT:
+            if(action == GLFW_PRESS){
+                isDrawing = 0;
+                step = -1;
             }
             break;
     }
