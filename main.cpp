@@ -62,13 +62,13 @@ int main() {
 //    for (int i = 0; i < vertices.size(); ++i) {
 //        std::cout<< (vertices[i].x) <<" "<< vertices[i].y <<std::endl;
 //    }
-    Grid grid(50, 50);
+    Grid grid(10,10);
 
     clock_t start = clock();
 
     std::vector<std::pair<int,int> > cells;
 
-    float time = 0;
+    float time = 0, end_time = 7.0f;
 
     while(!glfwWindowShouldClose(window)){
 
@@ -80,14 +80,14 @@ int main() {
 
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 //        sq.draw(VAO, shader);
-//        grid.draw_grid(VAO, shader);
+        grid.draw_grid(VAO, shader);
 //        grid.draw_line(VAO, shader,glm::vec2(0,0), glm::vec2(23,10));
         clock_t now = clock();
         float t= (float)(now - start)/(float)CLOCKS_PER_SEC;
         start = now;
-        if(isDrawing)
+        if(isDrawing && time < end_time)
             time += t;
-        grid.draw_line_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(45, 13),time,7.0f, isDrawing, step);
+        grid.draw_cell_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(7, 3),time,end_time, isDrawing, step);
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);

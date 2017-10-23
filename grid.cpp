@@ -50,15 +50,16 @@ void Grid::draw_grid(int VAO, Shader &shader) {
 
 void Grid::draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2) {
     std::vector<glm::vec3> vertices;
-    vertices.push_back(get_cell_center(grid[point1.x][point1.y]));
-    vertices.push_back(get_cell_center(grid[point2.x][point2.y]));
+    vertices.push_back(get_cell_center(grid[point1.x+1][point1.y+1]));
+    vertices.push_back(get_cell_center(grid[point2.x+1][point2.y+1]));
     shader.use();
     glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
+    shader.setVec4("Color", glm::vec4(0.2, 1.0, 0.6, 1.0));
     glBindVertexArray(VAO);
     glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
 }
 
-void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VAO, Shader shader, glm::vec2 point1,
+void Grid::draw_cell_with_time(std::vector<std::pair<int,int> > &vertices,int VAO, Shader shader, glm::vec2 point1,
                                glm::vec2 point2, float &curr_time, float end_time, int isDrawing, int &step) {
     if(isDrawing){
         std::cout<<"Drawing: "<<curr_time<<std::endl;
@@ -70,6 +71,9 @@ void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VA
         if(vertices.size()!=0) {
             if (time <= 1 && x != vertices[vertices.size()-1].first)
                 vertices.push_back(std::make_pair(x, y));
+            else if(time >=1 && x <= point2.x){
+                vertices.push_back(std::make_pair(x,y));
+            }
         }
         else{
             vertices.push_back(std::make_pair(x,y));
@@ -118,4 +122,21 @@ void Grid::draw_line_with_time(std::vector<std::pair<int,int> > &vertices,int VA
     for (int i = 0; i < vertices.size(); ++i) {
         grid[vertices[i].first+1][vertices[i].second+1].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
     }
+    this->draw_line_with_time(VAO, shader, point1, point2,curr_time/end_time);
+}
+
+void Grid::draw_line_with_time(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, float time) {
+    std::vector<glm::vec3> vertices;
+//    vertices.push_back(get_cell_center(grid[point1.x+1][point1.y+1]));
+//    vertices.push_back(get_cell_center(grid[point2.x+1][point2.y+1]));
+    glm::vec3 p1 = get_cell_center(grid[point1.x+1][point1.y+1]);
+    glm::vec3 p2 = get_cell_center(grid[point2.x+1][point2.y+1]);
+    glm::vec3 p_t = p1 + (p2-p1)*time;
+    vertices.push_back(p1);
+    vertices.push_back(p_t);
+    shader.use();
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
+    shader.setVec4("Color", glm::vec4(0.2, 1.0, 0.6, 1.0));
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
 }
