@@ -59,20 +59,50 @@ void Grid::draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2)
     glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
 }
 
+void swap_axis(float &x, float &y){
+    float temp = x;
+    x = y;
+    y = temp;
+}
+
+void Grid::draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, glm::vec4 Color) {
+    std::vector<glm::vec3> vertices;
+    vertices.push_back(get_cell_center(grid[point1.x+1][point1.y+1]));
+    vertices.push_back(get_cell_center(grid[point2.x+1][point2.y+1]));
+    shader.use();
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
+    shader.setVec4("Color", Color);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+}
+
+void Grid::draw_line(int VAO, Shader shader, glm::vec3 point1, glm::vec3 point2, glm::vec4 Color) {
+    std::vector<glm::vec3> vertices = {point1, point2};
+    shader.use();
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(),GL_STATIC_DRAW);
+    shader.setVec4("Color", Color);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+}
+
 void Grid::draw_cell_with_time(std::vector<std::pair<int,int> > &vertices,int VAO, Shader shader, glm::vec2 point1,
                                glm::vec2 point2, float &curr_time, float end_time, int isDrawing, int &step) {
+    bool swapped = false;
+    if((point2.y-point1.y)>(point2.x-point1.y)) {
+        swap_axis(point1.x, point1.y);
+        swap_axis(point2.x, point2.y);
+        swapped = true;
+    }
     if(isDrawing){
-        std::cout<<"Drawing: "<<curr_time<<std::endl;
+//        std::cout<<"Drawing: "<<curr_time<<std::endl;
         float time = curr_time/end_time;
         int x = point1.x + (point2.x-point1.x)*time;
         float y1 = ((point2.y - point1.y) / (point2.x - point1.x)) * (float) x +
                     ((point1.y * point2.x) - (point1.x * point2.y)) / (point2.x - point1.x);
         int y = round(y1);
         if(vertices.size()!=0) {
-            if (time <= 1 && x != vertices[vertices.size()-1].first)
+            if ((time <= 1 && x != vertices[vertices.size()-1].first) || (time >=1 && x <= point2.x)) {
                 vertices.push_back(std::make_pair(x, y));
-            else if(time >=1 && x <= point2.x){
-                vertices.push_back(std::make_pair(x,y));
             }
         }
         else{
@@ -120,9 +150,37 @@ void Grid::draw_cell_with_time(std::vector<std::pair<int,int> > &vertices,int VA
         }
     }
     for (int i = 0; i < vertices.size(); ++i) {
-        grid[vertices[i].first+1][vertices[i].second+1].color(VAO, shader, glm::vec3(0.5f, 0.25f, 0.75f));
+        if(swapped) {
+            grid[vertices[i].second + 1][vertices[i].first + 1].color(VAO, shader, glm::vec4(0.5f, 0.25f, 0.75f, 1.0f));
+        }
+        else
+            grid[vertices[i].first+1][vertices[i].second+1].color(VAO, shader, glm::vec4(0.5f, 0.25f, 0.75f,1.0f));
     }
-    this->draw_line_with_time(VAO, shader, point1, point2,curr_time/end_time);
+    if(swapped) {
+        swap_axis(point1.x, point1.y);
+        swap_axis(point2.x, point2.y);
+        this->draw_line(VAO, shader, point1, point2);
+        swap_axis(point1.x, point1.y);
+        swap_axis(point2.x, point2.y);
+    }
+    else
+        this->draw_line(VAO, shader, point1, point2);
+
+    if(curr_time<end_time && vertices.size()>0) {
+        float next_x = float(vertices[vertices.size() - 1].first) + 1.0f, current_y = float(
+                vertices[vertices.size() - 1].second);
+        float next_y = current_y + 1;
+        grid[next_x + 1][current_y + 1].color(VAO, shader, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+        grid[next_x + 1][next_y + 1].color(VAO, shader, glm::vec4(0.0f, 1.0f, 0.0f, 0.5f));
+        std::cout << next_x << " " << current_y << " " << next_y << " " << grid.size() << std::endl;
+        next_x = (next_x + 1.5f) * (2.0f / (grid[0].size() - 1)) - 1.0f;
+        next_y = (next_y + 1.5f) * (2.0f / (grid.size() - 1)) - 1.0f;
+        current_y = (current_y + 1.5f) * (2.0f / (grid.size() - 1)) - 1.0f;
+//    float mid_y = (y1 + 1.5f)*(2.0f/grid.size())
+        this->draw_line(VAO, shader, glm::vec3(next_x, current_y, 0), glm::vec3(next_x, next_y, 0),
+                        glm::vec4(0.7f, 0.5f, 0.3f, 1.0f));
+    }
+
 }
 
 void Grid::draw_line_with_time(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, float time) {

@@ -87,7 +87,7 @@ int main() {
         start = now;
         if(isDrawing && time < end_time)
             time += t;
-        grid.draw_cell_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(7, 3),time,end_time, isDrawing, step);
+        grid.draw_cell_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(7,3),time,end_time, isDrawing, step);
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);

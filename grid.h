@@ -21,6 +21,8 @@ public:
     std::vector<std::vector<Square> > get_grid();
     void draw_grid(int VAO, Shader &shader);
     void draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2);
+    void draw_line(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, glm::vec4 Color);
+    void draw_line(int VAO, Shader shader, glm::vec3 point1, glm::vec3 point2, glm::vec4 Color);
     void draw_cell_with_time(std::vector<std::pair<int, int> > &vertices, int VAO, Shader shader,
                              glm::vec2 point1, glm::vec2 point2, float &curr_time, float end_time, int isDrawing, int &step);
     void draw_line_with_time(int VAO, Shader shader, glm::vec2 point1, glm::vec2 point2, float time);

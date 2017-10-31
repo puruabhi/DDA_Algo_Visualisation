@@ -28,11 +28,11 @@ std::vector<glm::vec3> Square::get_vertices() {
     return vertices;
 }
 
-void Square::color(int VAO, Shader &shader, glm::vec3 color) {
+void Square::color(int VAO, Shader &shader, glm::vec4 color) {
     std::vector<glm::vec3> vertices = this->get_vertices();
     shader.use();
     glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
-    shader.setVec4("Color", glm::vec4(color,1.0f));
+    shader.setVec4("Color", color);
     //shader.setInt("chk_color", 0);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
