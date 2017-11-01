@@ -8,11 +8,13 @@ CMakeFiles/OpenGL_Practice.dir/grid.cpp.o
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/grid.h
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h
+ /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
 CMakeFiles/OpenGL_Practice.dir/main.cpp.o
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/grid.h
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/main.cpp
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h
+ /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
 CMakeFiles/OpenGL_Practice.dir/shader.cpp.o
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.cpp
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
@@ -20,3 +22,7 @@ CMakeFiles/OpenGL_Practice.dir/square.cpp.o
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.cpp
  /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h
+CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o
+ /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
+ /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.cpp
+ /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h

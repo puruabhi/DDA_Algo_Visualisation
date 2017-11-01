@@ -19,8 +19,8 @@ public:
     Square();
     Square(glm::vec3 bottom_left, glm::vec3 top_right);
     std::vector<glm::vec3> get_vertices();
-    void draw(int VAO, Shader shader);
-    void color(int VAO, Shader &shader, glm::vec4 color);
+    void draw(int VAO, int VBO, Shader shader);
+    void color(int VAO, int VBO, Shader &shader, glm::vec4 color);
 };
 
 #endif //OPENGL_PRACTICE_SQUARE_H

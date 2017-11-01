@@ -19,6 +19,10 @@ glad/glad.h
 -
 square.h
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h
+shader.h
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
+text_renderer.h
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
 
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/main.cpp
 iostream
@@ -39,6 +43,8 @@ square.h
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h
 grid.h
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/grid.h
+text_renderer.h
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
 
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.cpp
 shader.h
@@ -74,6 +80,28 @@ vector
 glad/glad.h
 -
 GLFW/glfw3.h
+-
+shader.h
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h
+
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.cpp
+text_renderer.h
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
+GLFW/glfw3.h
+-
+
+/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h
+iostream
+-
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtc/type_ptr.hpp
+-
+ft2build.h
+-
+map
 -
 shader.h
 /home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.h

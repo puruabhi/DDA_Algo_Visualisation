@@ -7,11 +7,13 @@ CMakeFiles/OpenGL_Practice.dir/grid.cpp.o: ../grid.cpp
 CMakeFiles/OpenGL_Practice.dir/grid.cpp.o: ../grid.h
 CMakeFiles/OpenGL_Practice.dir/grid.cpp.o: ../shader.h
 CMakeFiles/OpenGL_Practice.dir/grid.cpp.o: ../square.h
+CMakeFiles/OpenGL_Practice.dir/grid.cpp.o: ../text_renderer.h
 
 CMakeFiles/OpenGL_Practice.dir/main.cpp.o: ../grid.h
 CMakeFiles/OpenGL_Practice.dir/main.cpp.o: ../main.cpp
 CMakeFiles/OpenGL_Practice.dir/main.cpp.o: ../shader.h
 CMakeFiles/OpenGL_Practice.dir/main.cpp.o: ../square.h
+CMakeFiles/OpenGL_Practice.dir/main.cpp.o: ../text_renderer.h
 
 CMakeFiles/OpenGL_Practice.dir/shader.cpp.o: ../shader.cpp
 CMakeFiles/OpenGL_Practice.dir/shader.cpp.o: ../shader.h
@@ -19,4 +21,8 @@ CMakeFiles/OpenGL_Practice.dir/shader.cpp.o: ../shader.h
 CMakeFiles/OpenGL_Practice.dir/square.cpp.o: ../shader.h
 CMakeFiles/OpenGL_Practice.dir/square.cpp.o: ../square.cpp
 CMakeFiles/OpenGL_Practice.dir/square.cpp.o: ../square.h
+
+CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o: ../shader.h
+CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o: ../text_renderer.cpp
+CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o: ../text_renderer.h
 

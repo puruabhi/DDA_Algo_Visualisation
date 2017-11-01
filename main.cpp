@@ -8,6 +8,7 @@
 #include "shader.h"
 #include "square.h"
 #include "grid.h"
+#include "text_renderer.h"
 
 void init_glfw();
 GLFWwindow* createWindow(int width, int height, std::string title);
@@ -20,7 +21,21 @@ int isDrawing = 1;
 int step = 0;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+//    std::cout << "Hello, World!" << std::endl;
+
+    //Inputs
+    int grid_rows, grid_cols;
+    std::cout<<"Enter grid size"<<std::endl;
+    std::cin>>grid_rows>>grid_cols;
+
+    glm::vec2 point1;
+    glm::vec2 point2;
+
+    std::cout<<"Enter starting point:"<<std::endl;
+    std::cin>>point1.x>>point1.y;
+
+    std::cout<<"Enter ending point:"<<std::endl;
+    std::cin>>point2.x>>point2.y;
 
     init_glfw();
     GLFWwindow *window = createWindow(600,600, "OpenGL Project");
@@ -45,6 +60,10 @@ int main() {
 //            glm::vec3(0.0f,  0.5f, 0.0f)
 //    };
 
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     std::vector<glm::vec3> vertices;
     GLuint VBO, VAO;
     glGenBuffers(1, &VBO);
@@ -62,13 +81,16 @@ int main() {
 //    for (int i = 0; i < vertices.size(); ++i) {
 //        std::cout<< (vertices[i].x) <<" "<< vertices[i].y <<std::endl;
 //    }
-    Grid grid(10,10);
 
+    //Grid
+    Grid grid(grid_rows, grid_cols);
     clock_t start = clock();
 
     std::vector<std::pair<int,int> > cells;
 
     float time = 0, end_time = 7.0f;
+    Shader textShader("../Shaders/text_vShader.vs","../Shaders/text_fShader.fs");
+    TextRender textRender(textShader, "../fonts/actor/Actor-Regular.ttf");
 
     while(!glfwWindowShouldClose(window)){
 
@@ -80,14 +102,15 @@ int main() {
 
         //glDrawArrays(GL_TRIANGLES, 0, 3);
 //        sq.draw(VAO, shader);
-        grid.draw_grid(VAO, shader);
+        grid.draw_grid(VAO, VBO, shader, textRender);
 //        grid.draw_line(VAO, shader,glm::vec2(0,0), glm::vec2(23,10));
         clock_t now = clock();
         float t= (float)(now - start)/(float)CLOCKS_PER_SEC;
         start = now;
         if(isDrawing && time < end_time)
             time += t;
-        grid.draw_cell_with_time(cells, VAO, shader,glm::vec2(0,0), glm::vec2(7,3),time,end_time, isDrawing, step);
+        grid.draw_cell_with_time(cells, VAO, VBO, shader, textRender,point1, point2,time,end_time, isDrawing, step);
+//        textRender.renderText("My name is", 50.0f, 50.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 //        add_points(vertices,glm::vec3(-0.5f,-0.3f,0.0f), glm::vec3(0.6f,0.7f,0.0f), time);
 //        shader.use();
 //        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);

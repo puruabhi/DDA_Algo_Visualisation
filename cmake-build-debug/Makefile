@@ -258,6 +258,33 @@ square.cpp.s:
 	$(MAKE) -f CMakeFiles/OpenGL_Practice.dir/build.make CMakeFiles/OpenGL_Practice.dir/square.cpp.s
 .PHONY : square.cpp.s
 
+text_renderer.o: text_renderer.cpp.o
+
+.PHONY : text_renderer.o
+
+# target to build an object file
+text_renderer.cpp.o:
+	$(MAKE) -f CMakeFiles/OpenGL_Practice.dir/build.make CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o
+.PHONY : text_renderer.cpp.o
+
+text_renderer.i: text_renderer.cpp.i
+
+.PHONY : text_renderer.i
+
+# target to preprocess a source file
+text_renderer.cpp.i:
+	$(MAKE) -f CMakeFiles/OpenGL_Practice.dir/build.make CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.i
+.PHONY : text_renderer.cpp.i
+
+text_renderer.s: text_renderer.cpp.s
+
+.PHONY : text_renderer.s
+
+# target to generate assembly for a file
+text_renderer.cpp.s:
+	$(MAKE) -f CMakeFiles/OpenGL_Practice.dir/build.make CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.s
+.PHONY : text_renderer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -282,6 +309,9 @@ help:
 	@echo "... square.o"
 	@echo "... square.i"
 	@echo "... square.s"
+	@echo "... text_renderer.o"
+	@echo "... text_renderer.i"
+	@echo "... text_renderer.s"
 .PHONY : help
 
 

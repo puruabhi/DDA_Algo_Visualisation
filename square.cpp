@@ -14,10 +14,11 @@ Square::Square(glm::vec3 bottom_left, glm::vec3 top_right) {
     vertices.push_back(top_left);
 }
 
-void Square::draw(int VAO, Shader shader) {
+void Square::draw(int VAO, int VBO, Shader shader) {
     std::vector<glm::vec3> vertices = this->get_vertices();
     vertices.push_back(vertices[0]);
     shader.use();
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
     shader.setVec4("Color", glm::vec4(1.0f, 0.5f, 0.2f, 1.0f));
     glBindVertexArray(VAO);
@@ -28,9 +29,10 @@ std::vector<glm::vec3> Square::get_vertices() {
     return vertices;
 }
 
-void Square::color(int VAO, Shader &shader, glm::vec4 color) {
+void Square::color(int VAO, int VBO, Shader &shader, glm::vec4 color) {
     std::vector<glm::vec3> vertices = this->get_vertices();
     shader.use();
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(typeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
     shader.setVec4("Color", color);
     //shader.setInt("chk_color", 0);

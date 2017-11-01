@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/main.cpp" "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/OpenGL_Practice.dir/main.cpp.o"
   "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/shader.cpp" "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/OpenGL_Practice.dir/shader.cpp.o"
   "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.cpp" "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/OpenGL_Practice.dir/square.cpp.o"
+  "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.cpp" "/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/cmake-build-debug/CMakeFiles/OpenGL_Practice.dir/text_renderer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

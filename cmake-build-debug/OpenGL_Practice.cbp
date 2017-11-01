@@ -108,6 +108,12 @@
 		<Unit filename="/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/square.h">
 			<Option target="OpenGL_Practice"/>
 		</Unit>
+		<Unit filename="/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.cpp">
+			<Option target="OpenGL_Practice"/>
+		</Unit>
+		<Unit filename="/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/text_renderer.h">
+			<Option target="OpenGL_Practice"/>
+		</Unit>
 		<Unit filename="/home/abhisheikh/Documents/CLion_Projects/OpenGL_Practice/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
